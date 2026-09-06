@@ -20,11 +20,11 @@ description: 維護每個 feature 的 TRACKING.md 工作狀態文件（已知事
 
 順序上 distill 在前 compact 在後（distill 產生 `promoted` 標記，compact 消耗它），但 compact 只看標記不做判斷，任何時候跑都安全。檔案大到 distill 讀不動時，先 compact 掉早已作廢的段落再 distill。
 
-**不問。** 先假設再行動，把假設寫進輸出裡標明；這與專案 CLAUDE.md 的工作方式一致。
+**不問。** 先假設再行動，把假設寫進輸出裡標明。
 
 ## 記錄類型與範圍
 
-**範圍：一個 feature 資料夾一份 TRACKING.md。** 跨 feature 引用寫相對路徑加記錄 ID（`../nhi-upload/TRACKING.md F-3`）。只有 distill 的 recurrence 偵測跨資料夾掃。
+**範圍：一個 feature 資料夾一份 TRACKING.md。** 跨 feature 引用寫相對路徑加記錄 ID（`../<feature>/TRACKING.md F-3`）。只有 distill 的 recurrence 偵測跨資料夾掃。
 
 **code 與 TRACKING 的引用方向是單向的。** code（API 文件註解、測試、清單檔、規則的紅燈訊息）不引用 TRACKING 的 ID 或節號：API 文件註解只寫 what 與呼叫者的義務（會改變呼叫者行為的 why 算在內），為什麼選這條而不選另一條走 issue 編號 → 同編號 commit → TRACKING；紅燈訊息與停用測試的理由必須自我完結；唯一允許的出口是型別層級或檔頭一句 `docs/<feature>/` 路徑指標。反過來 TRACKING 指 code 一律寫 `型別#成員` 或型別名，不寫 `檔案:行號`——IDE refactor 會一併搜到前者，後者下一次改動就漂。API 文件註解不用人稱代名詞（寫「指定的值」不寫「你選的值」），不寫討論過程的用語。
 
@@ -163,7 +163,7 @@ capture 要在壓縮**之前**跑：壓縮摘要會把使用者原話改寫成�
 
 輸入：TRACKING 裡的三種標記（見「標記」）。先 `grep -nE '(superseded|closed|promoted) → '` 列出候選單位，只讀那些單位，不整份載入。輸出：archive 檔更新、原位 tombstone、一段報告。**不做判斷，不新增知識。**
 
-這是 archive 第一次被正式定義；舊的 archive 檔是語意化之前的東西，**不回溯改寫**，recurrence 對它們只做 best-effort。
+TRACKING 裡沒有對應 tombstone 的 archive 內容**不回溯改寫**，recurrence 對它們只做 best-effort。
 
 ### 語意
 
